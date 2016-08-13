@@ -1,14 +1,15 @@
 package com.causy.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Map;
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+
 public class Person {
     private String firstName;
     private String lastName;
     private String dateOfBirth;
     private String[] citizenships;
+    private Map<String, Object> creditCards;
+    private int age;
 
     public Person(String firstName, String lastName, String dateOfBirth, String[] citizenships, Map<String, Object> creditCards, int age) {
         this.firstName = firstName;
@@ -17,6 +18,53 @@ public class Person {
         this.citizenships = citizenships;
         this.creditCards = creditCards;
         this.age = age;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String firstName;
+        private String lastName;
+        private String dateOfBirth;
+        private String[] citizenships;
+        private Map<String, Object> creditCards;
+        private int age;
+
+        public Builder withFirstName(final String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder withLastName(final String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder withDateOfBirht(final String dateOfBirth) {
+            this.dateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public Builder withCitizenships(final String[] citizenships) {
+            this.citizenships = citizenships;
+            return this;
+        }
+
+        public Builder withCreditCards(final Map<String, Object> creditCards) {
+            this.creditCards = creditCards;
+            return this;
+        }
+
+        public Builder withAge(final int age) {
+            this.age = age;
+            return this;
+        }
+
+        public Person build() {
+            return new Person(firstName, lastName, dateOfBirth, citizenships, creditCards, age);
+        }
     }
 
     public String getFirstName() {
@@ -42,7 +90,4 @@ public class Person {
     public int getAge() {
         return age;
     }
-    private Map<String, Object> creditCards;
-
-    private int age;
 }

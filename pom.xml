@@ -15,29 +15,37 @@
         <version.jersey>2.17</version.jersey>
         <version.jaxrs>2.0.1</version.jaxrs>
         <version.servlet.api>3.1.0</version.servlet.api>
+        <version.weld>2.2.9.Final</version.weld>
+        <version.cdi>1.2</version.cdi>
     </properties>
 
     <dependencies>
 
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${version.servlet.api}</version>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>${version.cdi}</version>
         </dependency>
 
         <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>${version.jaxrs}</version>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet</artifactId>
+            <version>${version.weld}</version>
         </dependency>
 
-        <!-- Jersey -->
+        <dependency>
+            <groupId>org.glassfish.jersey.ext.cdi</groupId>
+            <artifactId>jersey-cdi1x-servlet</artifactId>
+            <version>${version.jersey}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
             <version>${version.jersey}</version>
         </dependency>
+
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
@@ -59,6 +67,12 @@
             <version>${version.jersey}</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>org.eclipse.persistence</groupId>-->
+            <!--<artifactId>javax.persistence</artifactId>-->
+            <!--<version>2.1.1</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>junit</groupId>

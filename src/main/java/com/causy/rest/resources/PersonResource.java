@@ -1,7 +1,9 @@
 package com.causy.rest.resources;
 
 import com.causy.model.Person;
+import com.causy.services.PersonTransformationService;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +16,16 @@ import java.util.Map;
 
 @Path("/person")
 public class PersonResource {
+
+    private PersonTransformationService personTransformationService;
+
+    public PersonResource() {
+    }
+
+    @Inject
+    public PersonResource(PersonTransformationService personTransformationService) {
+        this.personTransformationService = personTransformationService;
+    }
 
     @Path("get")
     @GET
@@ -32,6 +44,25 @@ public class PersonResource {
 
         //return Response.ok().entity(p).build();
         return p;
+    }
+
+    @Path("get/anonymous")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    //add MediaType.APPLICATION_XML if you want XML as well (don't forget @XmlRootElement)
+    public Person getAnonymizedPerson() {
+
+        Map<String, Object> creditCards = new HashMap<String, Object>();
+        creditCards.put("MasterCard", "1234 1234 1234 1234");
+        creditCards.put("Visa", "1234 1234 1234 1234");
+        creditCards.put("dummy", true);
+        Person p = new Person("Nabi", "Zamani", null, new String[]{"German", "Persian"}, creditCards, 33);
+
+
+        System.out.println("REST call...");
+
+        //return Response.ok().entity(p).build();
+        return personTransformationService.anonymize(p);
     }
 
     @POST
