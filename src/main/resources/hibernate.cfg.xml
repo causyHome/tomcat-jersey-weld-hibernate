@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Datasource (configured in server configuration, will be needed in the future for prod) cf. http://www.journaldev.com/2905/hibernate-tomcat-jndi-datasource-example-tutorial -->
+        <!--<property name="hibernate.connection.datasource">java:comp/env/jdbc/MyLocalDB</property>-->
+
+
+        <!-- MYSQL -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/poc</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.connection.pool_size">1</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+
+        <!-- General hibernate settings -->
+
+        <property name="show_sql">true</property>
+        <!--
+			validate: validate the schema, makes no changes to the database.
+    		update: update the schema.
+    		create: creates the schema, destroying previous data.
+    		create-drop: drop the schema at the end of the session.
+		-->
+        <property name="hbm2ddl.auto">update</property>
+
+        <property name="hibernate.c3p0.timeout">7200</property>
+        <property name="hibernate.c3p0.max_statements">10</property>
+
+
+        <!-- Mapping with model class containing annotations -->
+        <mapping class="com.causy.model.Employee"/>
+    </session-factory>
+</hibernate-configuration>
