@@ -25,6 +25,6 @@ public class HibernateSetupTest {
         tx.commit();
 
         Assertions.assertThat(actual.getName()).isEqualTo("Thomas");
-        Assertions.assertThat(actual.getRole()).isEqualTo("test2");
+        Assertions.assertThat(actual.getRole()).isEqualTo("test");
     }
 }
