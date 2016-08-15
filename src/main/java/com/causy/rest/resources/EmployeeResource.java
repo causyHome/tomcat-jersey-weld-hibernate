@@ -2,10 +2,12 @@ package com.causy.rest.resources;
 
 import com.causy.model.Employee;
 import com.causy.persistence.SessionFactoryManager;
+import com.causy.services.EmployeeService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,30 +22,27 @@ import java.net.URISyntaxException;
 @Path("employee")
 public class EmployeeResource {
 
+    private final EmployeeService employeeService;
+
+    @Inject
+    public EmployeeResource(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeeById(@PathParam("id") final int id) {
-        SessionFactory sessionFactory = SessionFactoryManager.instance.getSessionFactory();
-
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        Employee emp = (Employee) session.get(Employee.class, id);
-        tx.commit();
-        return Response.ok(emp).build();
+        return Response.ok(employeeService.get(id)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEmployee(Employee newEmployee) throws URISyntaxException {
 
-        SessionFactory sessionFactory = SessionFactoryManager.instance.getSessionFactory();
-
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        session.save(newEmployee);
-        tx.commit();
-        return Response.created(new URI("/service/employee/" + newEmployee.getId())).build();
+        final int id = employeeService.create(newEmployee);
+        return Response.created(new URI("/service/employee/" + id)).build();
     }
 
 }
