@@ -2,9 +2,12 @@ package com.causy.services;
 
 import com.causy.model.Employee;
 import com.causy.persistence.SessionFactoryManager;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+
+import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
     @Override
@@ -27,5 +30,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee e = (Employee) session.get(Employee.class, employeeId);
         tx.commit();
         return e;
+    }
+
+    @Override
+    public List<Employee> list(){
+        SessionFactory sessionFactory = SessionFactoryManager.instance.getSessionFactory();
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        final List<Employee> employees = session.createCriteria(Employee.class).list();
+        tx.commit();
+        return employees;
     }
 }

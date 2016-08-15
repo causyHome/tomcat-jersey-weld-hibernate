@@ -25,6 +25,9 @@ public class Employee {
     @Column(name = "ROLE", length = 20, nullable = true)
     private String role;
 
+    @Column(name = "insert_time", nullable = true)
+    private long insertTime;
+
     public int getId() {
         return id;
     }
@@ -41,9 +44,6 @@ public class Employee {
     public long getInsertTime() {
         return insertTime;
     }
-
-    @Column(name = "insert_time", nullable = true)
-    private long insertTime;
 
     public Employee(int id, String name, String role) {
         this.id = id;

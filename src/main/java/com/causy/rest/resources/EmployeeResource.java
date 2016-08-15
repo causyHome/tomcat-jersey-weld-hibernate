@@ -37,6 +37,13 @@ public class EmployeeResource {
         return Response.ok(employeeService.get(id)).build();
     }
 
+    @GET
+    @Path("/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listEmployees() {
+        return Response.ok(employeeService.list()).build();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEmployee(Employee newEmployee) throws URISyntaxException {
