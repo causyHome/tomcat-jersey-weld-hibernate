@@ -1,17 +1,19 @@
 package com.causy.model;
 
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.Map;
 
 public class Person {
-    private String firstName;
-    private String lastName;
-    private String dateOfBirth;
-    private String[] citizenships;
-    private Map<String, Object> creditCards;
-    private int age;
+    private final String firstName;
+    private final String lastName;
+    private final String dateOfBirth;
+    private final ImmutableList<String> citizenships;
+    private final Map<String, Object> creditCards;
+    private final int age;
 
-    public Person(String firstName, String lastName, String dateOfBirth, String[] citizenships, Map<String, Object> creditCards, int age) {
+    public Person(String firstName, String lastName, String dateOfBirth, ImmutableList<String> citizenships, Map<String, Object> creditCards, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -28,7 +30,7 @@ public class Person {
         private String firstName;
         private String lastName;
         private String dateOfBirth;
-        private String[] citizenships;
+        private ImmutableList<String> citizenships;
         private Map<String, Object> creditCards;
         private int age;
 
@@ -47,7 +49,7 @@ public class Person {
             return this;
         }
 
-        public Builder withCitizenships(final String[] citizenships) {
+        public Builder withCitizenships(final ImmutableList<String> citizenships) {
             this.citizenships = citizenships;
             return this;
         }
@@ -79,7 +81,7 @@ public class Person {
         return dateOfBirth;
     }
 
-    public String[] getCitizenships() {
+    public ImmutableList<String> getCitizenships() {
         return citizenships;
     }
 

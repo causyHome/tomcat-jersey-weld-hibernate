@@ -11,7 +11,7 @@ public class Message {
         return lastName;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
@@ -19,12 +19,12 @@ public class Message {
         return text;
     }
 
-    private String firstName;
-    private String lastName;
-    private Date date;
-    private String text;
+    private final String firstName;
+    private final String lastName;
+    private final long date;
+    private final String text;
 
-    public Message(String firstName, String lastName, Date date, String text) {
+    public Message(final String firstName, final String lastName, final long date, String text) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.date = date;

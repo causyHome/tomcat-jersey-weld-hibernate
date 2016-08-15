@@ -29,7 +29,7 @@ public class MessageResource {
 
         List<Message> messages = new ArrayList<>();
 
-        Message m = new Message("Nabi", "Zamani", new Date(), "Hello World");
+        Message m = new Message("Nabi", "Zamani", new Date().getTime(), "Hello World");
         messages.add(m);
 
         System.out.println("getAllMessages(): found " + messages.size() + " message(s) on DB");

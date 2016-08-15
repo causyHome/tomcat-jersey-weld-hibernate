@@ -38,12 +38,12 @@ public class Employee {
         return role;
     }
 
-    public Date getInsertTime() {
+    public long getInsertTime() {
         return insertTime;
     }
 
     @Column(name = "insert_time", nullable = true)
-    private Date insertTime;
+    private long insertTime;
 
     public Employee(int id, String name, String role) {
         this.id = id;

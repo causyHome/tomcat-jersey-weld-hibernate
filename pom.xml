@@ -17,6 +17,7 @@
         <version.servlet.api>3.1.0</version.servlet.api>
         <version.weld>2.2.9.Final</version.weld>
         <version.cdi>1.2</version.cdi>
+        <version.findbugs.plugin>3.0.3</version.findbugs.plugin>
     </properties>
 
     <dependencies>
@@ -110,6 +111,31 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${version.findbugs.plugin}</version>
+                <configuration>
+                    <!--Enables analysis which takes more memory but finds more bugs.
+                             If you run out of memory, changes the value of the effort element
+                             to 'Low'.-->
+                    <effort>Max</effort>
+                    <!-- Reports all bugs (other values are medium and max) -->
+                    <threshold>Low</threshold>
+                    <!-- Produces XML report -->
+                    <xmlOutput>true</xmlOutput>
+                    <excludeFilterFile>code-rules/findbugs-excludes.xml</excludeFilterFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>analyze-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
