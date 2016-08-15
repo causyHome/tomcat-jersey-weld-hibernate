@@ -2,7 +2,6 @@ package com.causy.services;
 
 import com.causy.model.Employee;
 import com.causy.persistence.SessionFactoryManager;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -33,7 +32,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> list(){
+    public void update(Employee employee) {
+        SessionFactory sessionFactory = SessionFactoryManager.instance.getSessionFactory();
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        session.update(employee);
+        tx.commit();
+    }
+
+    @Override
+    public List<Employee> list() {
         SessionFactory sessionFactory = SessionFactoryManager.instance.getSessionFactory();
 
         Session session = sessionFactory.getCurrentSession();

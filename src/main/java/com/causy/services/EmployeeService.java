@@ -10,5 +10,7 @@ public interface EmployeeService {
 
     Employee get(int employeeId);
 
+    void update(Employee employee);
+
     List<Employee> list();
 }
