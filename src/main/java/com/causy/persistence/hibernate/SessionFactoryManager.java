@@ -1,4 +1,4 @@
-package com.causy.persistence;
+package com.causy.persistence.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -10,33 +10,31 @@ import java.util.logging.Logger;
 public enum SessionFactoryManager {
     instance;
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
     private final Logger logger = Logger.getLogger("SessionFactoryManagerLogger");
 
 
     SessionFactoryManager() {
-        try {
-            this.sessionFactory = createSessionFactory();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private SessionFactory createSessionFactory()
-            throws Exception {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
         logger.info("Hibernate Configuration created successfully");
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         logger.info("ServiceRegistry created successfully");
-        SessionFactory sessionFactory = configuration
-                .buildSessionFactory(serviceRegistry);
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         logger.info("SessionFactory created successfully");
-        return sessionFactory;
+        this.sessionFactory = sessionFactory;
     }
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
+    }
+
+    public void destroySessionFactory() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            logger.info("Closing sessionFactory");
+            sessionFactory.close();
+        }
+        logger.info("Released Hibernate sessionFactory resource");
     }
 }

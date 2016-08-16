@@ -13,4 +13,6 @@ public interface EmployeeService {
     void update(Employee employee);
 
     List<Employee> list();
+
+    int count();
 }

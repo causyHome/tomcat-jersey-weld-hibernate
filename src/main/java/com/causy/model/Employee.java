@@ -45,6 +45,10 @@ public class Employee {
         return insertTime;
     }
 
+    public Employee(String name, String role) {
+        this.name = name;
+        this.role = role;
+    }
     public Employee(int id, String name, String role) {
         this.id = id;
         this.name = name;
@@ -52,6 +56,6 @@ public class Employee {
     }
 
     public Employee() {
-        this(0, null, null);
+        this(null, null);
     }
 }
