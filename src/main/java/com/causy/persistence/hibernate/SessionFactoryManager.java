@@ -26,7 +26,7 @@ public enum SessionFactoryManager {
 
         Properties defaultProps = new Properties();
         try (final InputStream stream =
-                     Thread.currentThread().getContextClassLoader().getResourceAsStream("hibernate.posgresql.properties")) {
+                     Thread.currentThread().getContextClassLoader().getResourceAsStream("hibernate.properties")) {
             defaultProps.load(stream);
         } catch (IOException e) {
             throw new IllegalStateException(e);

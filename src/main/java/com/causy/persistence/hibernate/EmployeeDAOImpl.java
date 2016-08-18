@@ -1,6 +1,7 @@
-package com.causy.services;
+package com.causy.persistence.hibernate;
 
 import com.causy.model.Employee;
+import com.causy.persistence.dao.EmployeeDAO;
 import com.causy.persistence.hibernate.SessionFactoryManager;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -9,14 +10,14 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeDAOImpl implements EmployeeDAO {
     private final SessionFactoryManager sessionFactoryManager;
 
-    EmployeeServiceImpl() {
+    EmployeeDAOImpl() {
         this.sessionFactoryManager = SessionFactoryManager.instance;
     }
 
-    EmployeeServiceImpl(SessionFactoryManager sessionFactoryManager) {
+    EmployeeDAOImpl(SessionFactoryManager sessionFactoryManager) {
         this.sessionFactoryManager = sessionFactoryManager;
     }
 

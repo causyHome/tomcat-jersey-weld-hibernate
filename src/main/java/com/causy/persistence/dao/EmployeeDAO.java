@@ -1,10 +1,10 @@
-package com.causy.services;
+package com.causy.persistence.dao;
 
 import com.causy.model.Employee;
 
 import java.util.List;
 
-public interface EmployeeService {
+public interface EmployeeDAO {
 
     int create(Employee newEmployee);
 

@@ -1,14 +1,16 @@
-package com.causy.services;
+package com.causy.persistence.hibernate;
 
 import com.causy.model.Employee;
+import com.causy.persistence.dao.EmployeeDAO;
+import com.causy.persistence.hibernate.EmployeeDAOImpl;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EmployeeServiceImplTest {
-    private final EmployeeService service = new EmployeeServiceImpl();
+public class EmployeeDAOImplTest {
+    private final EmployeeDAO service = new EmployeeDAOImpl();
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();

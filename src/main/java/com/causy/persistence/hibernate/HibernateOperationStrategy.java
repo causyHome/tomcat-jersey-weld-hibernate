@@ -1,4 +1,4 @@
-package com.causy.services;
+package com.causy.persistence.hibernate;
 
 import org.hibernate.Session;
 
