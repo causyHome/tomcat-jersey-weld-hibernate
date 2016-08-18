@@ -5,9 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import java.util.Date;
 
 @Entity
 @Table(name = "Employee",
@@ -20,20 +21,23 @@ public class Employee {
     private int id;
 
     @Column(name = "NAME", length = 20, nullable = true)
-    private String name;
+    private final String name;
 
     @Column(name = "ROLE", length = 20, nullable = true)
-    private String role;
+    private final String role;
 
     @Column(name = "insert_time", nullable = true)
     private long insertTime;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     public int getId() {
         return id;
     }
 
     public String getName() {
-
         return name;
     }
 

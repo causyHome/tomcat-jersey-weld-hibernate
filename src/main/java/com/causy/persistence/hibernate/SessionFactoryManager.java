@@ -1,6 +1,7 @@
 package com.causy.persistence.hibernate;
 
 import com.causy.model.Employee;
+import com.causy.model.Team;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -35,6 +36,7 @@ public enum SessionFactoryManager {
         configuration.addProperties(defaultProps);
 
         configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Team.class);
 
         logger.info("Hibernate Configuration created successfully");
 

@@ -11,6 +11,7 @@ public class Application extends ResourceConfig {
 
         register(PersonResource.class);
         register(EmployeeResource.class);
+        register(TeamResource.class);
         register(MessageResource.class);
     }
 }

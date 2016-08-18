@@ -73,6 +73,7 @@
             <version>${version.jersey}</version>
         </dependency>
 
+        <!-- PERSISTENCE -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>

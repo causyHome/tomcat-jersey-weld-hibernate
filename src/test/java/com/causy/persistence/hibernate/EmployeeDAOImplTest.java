@@ -1,8 +1,8 @@
 package com.causy.persistence.hibernate;
 
 import com.causy.model.Employee;
+import com.causy.model.Team;
 import com.causy.persistence.dao.EmployeeDAO;
-import com.causy.persistence.hibernate.EmployeeDAOImpl;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
