@@ -1,10 +1,17 @@
 package com.causy.persistence.hibernate;
 
+import com.causy.model.Employee;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 public enum SessionFactoryManager {
@@ -16,7 +23,19 @@ public enum SessionFactoryManager {
 
     private SessionFactory setupSessionFactory() {
         Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
+
+        Properties defaultProps = new Properties();
+        try (final InputStream stream =
+                     Thread.currentThread().getContextClassLoader().getResourceAsStream("hibernate.properties")) {
+            defaultProps.load(stream);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+
+        configuration.addProperties(defaultProps);
+
+        configuration.addAnnotatedClass(Employee.class);
+
         logger.info("Hibernate Configuration created successfully");
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
