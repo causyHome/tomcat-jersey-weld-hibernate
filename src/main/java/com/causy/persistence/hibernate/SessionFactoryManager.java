@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 public enum SessionFactoryManager {
     instance;
 
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
     private final Logger logger = Logger.getLogger("SessionFactoryManagerLogger");
 
 
-    SessionFactoryManager() {
+    private SessionFactory setupSessionFactory() {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
         logger.info("Hibernate Configuration created successfully");
@@ -23,10 +23,13 @@ public enum SessionFactoryManager {
         logger.info("ServiceRegistry created successfully");
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         logger.info("SessionFactory created successfully");
-        this.sessionFactory = sessionFactory;
+        return sessionFactory;
     }
 
     public SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            sessionFactory = setupSessionFactory();
+        }
         return sessionFactory;
     }
 
