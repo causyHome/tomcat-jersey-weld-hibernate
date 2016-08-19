@@ -5,12 +5,12 @@ import com.causy.persistence.dao.TeamDAO;
 
 import java.util.List;
 
-import static com.causy.persistence.hibernate.HibernateUtil.performHibernateOperation;
+import static com.causy.persistence.hibernate.HibernateUtils.performHibernateOperation;
 
 public class TeamDAOImpl implements TeamDAO {
     @Override
     public int create(Team newTeam) {
-        return (int) HibernateUtil.performHibernateOperation(session -> session.save(newTeam), "Could not create entity!");
+        return (int) performHibernateOperation(session -> session.save(newTeam), "Could not create entity!");
     }
 
     @Override

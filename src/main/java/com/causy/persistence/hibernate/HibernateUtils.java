@@ -5,7 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class HibernateUtil {
+class HibernateUtils {
+
     static Object performHibernateOperation(final HibernateOperationStrategy operation, String errorMessage) {
         SessionFactory sessionFactory = SessionFactoryManager.instance.getSessionFactory();
 

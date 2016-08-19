@@ -1,13 +1,9 @@
-package com.causy.persistence;
+package com.causy.persistence.hibernate;
 
-
-import com.causy.persistence.hibernate.SessionFactoryManager;
-import org.hibernate.SessionFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.util.logging.Logger;
 
 @WebListener
 public class PersistenceServletContextListener implements ServletContextListener {

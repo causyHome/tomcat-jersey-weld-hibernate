@@ -5,7 +5,7 @@ import com.causy.persistence.dao.EmployeeDAO;
 
 import java.util.List;
 
-import static com.causy.persistence.hibernate.HibernateUtil.performHibernateOperation;
+import static com.causy.persistence.hibernate.HibernateUtils.performHibernateOperation;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
@@ -36,6 +36,4 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public int count() {
         return (int) performHibernateOperation(session -> session.createQuery("select count(*) from Employee ").uniqueResult(), "Could not get count of entity");
     }
-
-
 }
