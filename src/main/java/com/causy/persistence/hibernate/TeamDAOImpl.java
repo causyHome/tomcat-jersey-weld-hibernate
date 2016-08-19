@@ -1,8 +1,11 @@
 package com.causy.persistence.hibernate;
 
+import com.causy.model.Employee;
 import com.causy.model.Team;
+import com.causy.persistence.dao.EmployeeDAO;
 import com.causy.persistence.dao.TeamDAO;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static com.causy.persistence.hibernate.HibernateUtils.performHibernateOperation;
@@ -24,6 +27,16 @@ public class TeamDAOImpl implements TeamDAO {
             session.update(team);
             return null;
         }, "Something went wrong when trying to update entity, it probably doesnt exist");
+    }
+
+    @Override
+    public void addMember(Team team, Employee employee) {
+        performHibernateOperation(session -> {
+            employee.setTeam(team);
+            team.addMember(employee);
+            session.update(team);
+            return null;
+        }, "");
     }
 
     @Override

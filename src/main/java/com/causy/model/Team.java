@@ -28,7 +28,7 @@ public class Team {
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Employee> members;
+    private List<Employee> members;
 
     public Team(int id, String name, List<Employee> teamMembers) {
         this.id = id;
@@ -55,7 +55,7 @@ public class Team {
         return name;
     }
 
-    public Collection<Employee> getMembers() {
+    public List<Employee> getMembers() {
         return members;
     }
 

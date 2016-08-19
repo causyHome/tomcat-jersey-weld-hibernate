@@ -62,4 +62,12 @@ public class Employee {
     public Employee() {
         this(null, null);
     }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
 }

@@ -1,10 +1,13 @@
 package com.causy.persistence.hibernate;
 
+import com.causy.model.Employee;
 import com.causy.model.Team;
+import com.causy.persistence.dao.EmployeeDAO;
 import com.causy.persistence.dao.TeamDAO;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,5 +65,27 @@ public class TeamDAOImplTest {
 
         //then
         assertThat(teamDAO.get(id).getName()).isEqualTo("Team1");
+    }
+
+    @Test
+    public void should_be_able_to_add_employee_to_existing_team() throws Exception {
+        //given
+        final int id = teamDAO.create(new Team("Team1"));
+
+        //when
+        final Employee employee = new Employee("employee", "role");
+        teamDAO.addMember(new Team(id, "Team1"), employee);
+
+        //then
+        final Team savedTeam = teamDAO.get(id);
+        assertThat(savedTeam.getName()).isEqualTo("Team1");
+        assertThat(savedTeam.getMembers()).isNotEmpty();
+
+        final Employee savedEmployee = savedTeam.getMembers().get(0);
+        assertThat(savedEmployee.getName()).isEqualTo("employee");
+        assertThat(savedEmployee.getRole()).isEqualTo("role");
+        assertThat(savedEmployee.getRole()).isEqualTo("role");
+
+        assertThat(savedEmployee.getTeam().getId()).isEqualTo(id);
     }
 }
