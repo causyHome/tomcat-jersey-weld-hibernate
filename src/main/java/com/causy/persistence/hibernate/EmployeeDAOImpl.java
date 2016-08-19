@@ -10,16 +10,9 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
+import static com.causy.persistence.hibernate.HibernateUtils.performHibernateOperation;
+
 public class EmployeeDAOImpl implements EmployeeDAO {
-    private final SessionFactoryManager sessionFactoryManager;
-
-    EmployeeDAOImpl() {
-        this.sessionFactoryManager = SessionFactoryManager.instance;
-    }
-
-    EmployeeDAOImpl(SessionFactoryManager sessionFactoryManager) {
-        this.sessionFactoryManager = sessionFactoryManager;
-    }
 
     @Override
     public int create(Employee newEmployee) {
@@ -49,25 +42,4 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public int count() {
         return (int) performHibernateOperation(session -> session.createQuery("select count(*) from Employee ").uniqueResult(), "Could not get count of entity");
     }
-
-    private Object performHibernateOperation(final HibernateOperationStrategy operation, String errorMessage) {
-        SessionFactory sessionFactory = sessionFactoryManager.getSessionFactory();
-
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            final Object returnedData = operation.execute(session);
-            tx.commit();
-            return returnedData;
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            throw new IllegalStateException(errorMessage, e);
-        } finally {
-            session.close();
-        }
-    }
-
-
 }
