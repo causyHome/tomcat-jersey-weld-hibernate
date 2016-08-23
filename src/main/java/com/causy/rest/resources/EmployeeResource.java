@@ -1,7 +1,7 @@
 package com.causy.rest.resources;
 
 import com.causy.model.Employee;
-import com.causy.persistence.dao.EmployeeDAO;
+import com.causy.persistence.dao.BasicDAO;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -19,11 +19,11 @@ import java.net.URISyntaxException;
 @Path("employee")
 public class EmployeeResource {
 
-    private final EmployeeDAO employeeDAO;
+    private final BasicDAO basicDAO;
 
     @Inject
-    public EmployeeResource(EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeeResource(BasicDAO basicDAO) {
+        this.basicDAO = basicDAO;
     }
 
 
@@ -31,27 +31,27 @@ public class EmployeeResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeeById(@PathParam("id") final int id) {
-        return Response.ok(employeeDAO.get(id)).build();
+        return Response.ok(basicDAO.get(null, id)).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listEmployees() {
-        return Response.ok(employeeDAO.list()).build();
+        return Response.ok(basicDAO.list(Employee.class)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEmployee(Employee newEmployee) throws URISyntaxException {
 
-        final int id = employeeDAO.create(newEmployee);
+        final int id = basicDAO.create(newEmployee);
         return Response.created(new URI("/service/employee/" + id)).build();
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateEmployee(Employee existingEmployee) {
-        employeeDAO.update(existingEmployee);
+        basicDAO.update(existingEmployee);
         return Response.noContent().build();
     }
 

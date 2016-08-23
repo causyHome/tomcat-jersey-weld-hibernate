@@ -20,13 +20,13 @@ public class Employee {
     @Column(name = "ID", nullable = false, unique = true, length = 11)
     private int id;
 
-    @Column(name = "NAME", length = 20, nullable = true)
+    @Column(name = "NAME", length = 20)
     private final String name;
 
-    @Column(name = "ROLE", length = 20, nullable = true)
+    @Column(name = "ROLE", length = 20)
     private final String role;
 
-    @Column(name = "insert_time", nullable = true)
+    @Column(name = "insert_time")
     private long insertTime;
 
     @ManyToOne

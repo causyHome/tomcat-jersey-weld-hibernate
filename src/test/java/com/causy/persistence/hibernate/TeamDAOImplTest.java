@@ -2,12 +2,10 @@ package com.causy.persistence.hibernate;
 
 import com.causy.model.Employee;
 import com.causy.model.Team;
-import com.causy.persistence.dao.EmployeeDAO;
 import com.causy.persistence.dao.TeamDAO;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +13,7 @@ public class TeamDAOImplTest {
     private final TeamDAO teamDAO = new TeamDAOImpl();
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public final ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void should_be_able_to_create_entity_and_then_read_it() throws Exception {

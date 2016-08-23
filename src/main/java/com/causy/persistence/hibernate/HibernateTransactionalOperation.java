@@ -3,6 +3,6 @@ package com.causy.persistence.hibernate;
 import org.hibernate.Session;
 
 @FunctionalInterface
-interface HibernateOperationStrategy {
+interface HibernateTransactionalOperation {
     Object execute(Session session);
 }

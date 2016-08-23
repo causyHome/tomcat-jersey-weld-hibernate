@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -24,7 +23,7 @@ public class Team {
     @Column(name = "ID", nullable = false, unique = true, length = 11)
     private int id;
 
-    @Column(name = "NAME", length = 20, nullable = true)
+    @Column(name = "NAME", length = 20)
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)

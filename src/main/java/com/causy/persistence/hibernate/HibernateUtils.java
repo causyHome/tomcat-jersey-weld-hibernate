@@ -7,7 +7,7 @@ import org.hibernate.Transaction;
 
 class HibernateUtils {
 
-    static Object performHibernateOperation(final HibernateOperationStrategy operation, String errorMessage) {
+    static Object executeTransactionalHibernateOperation(final HibernateTransactionalOperation operation, String errorMessage) {
         SessionFactory sessionFactory = SessionFactoryManager.instance.getSessionFactory();
 
         Session session = sessionFactory.openSession();
@@ -22,7 +22,9 @@ class HibernateUtils {
             }
             throw new IllegalStateException(errorMessage, e);
         } finally {
-            session.close();
+            if (session.isOpen()) {
+                session.close();
+            }
         }
     }
 }

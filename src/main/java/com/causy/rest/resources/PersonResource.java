@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+@SuppressWarnings("Convert2Diamond")
 @Path("/person")
 public class PersonResource {
 
@@ -34,7 +35,7 @@ public class PersonResource {
     //add MediaType.APPLICATION_XML if you want XML as well (don't forget @XmlRootElement)
     public Person getPerson() {
 
-        Map<String, Object> creditCards = new HashMap<String, Object>();
+        Map<String, Object> creditCards = new HashMap<>();
         creditCards.put("MasterCard", "1234 1234 1234 1234");
         creditCards.put("Visa", "1234 1234 1234 1234");
         creditCards.put("dummy", true);
@@ -53,7 +54,7 @@ public class PersonResource {
     //add MediaType.APPLICATION_XML if you want XML as well (don't forget @XmlRootElement)
     public Person getAnonymizedPerson() {
 
-        Map<String, Object> creditCards = new HashMap<String, Object>();
+        Map<String, Object> creditCards = new HashMap<>();
         creditCards.put("MasterCard", "1234 1234 1234 1234");
         creditCards.put("Visa", "1234 1234 1234 1234");
         creditCards.put("dummy", true);

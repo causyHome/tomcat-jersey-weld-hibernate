@@ -2,7 +2,7 @@ package com.causy.rest.resources;
 
 import com.causy.model.Employee;
 import com.causy.model.Team;
-import com.causy.persistence.dao.EmployeeDAO;
+import com.causy.persistence.dao.BasicDAO;
 import com.causy.persistence.dao.TeamDAO;
 
 import javax.inject.Inject;
@@ -22,12 +22,12 @@ import java.net.URISyntaxException;
 public class TeamResource {
 
     private final TeamDAO teamDAO;
-    private final EmployeeDAO employeeDAO;
+    private final BasicDAO basicDAO;
 
     @Inject
-    public TeamResource(TeamDAO teamDAO, EmployeeDAO employeeDAO) {
+    public TeamResource(TeamDAO teamDAO, BasicDAO basicDAO) {
         this.teamDAO = teamDAO;
-        this.employeeDAO = employeeDAO;
+        this.basicDAO = basicDAO;
     }
 
     @GET
@@ -54,8 +54,8 @@ public class TeamResource {
     @Path("{id}/member/{employeeId}")
     public Response addMember(@PathParam("id") int id, @PathParam("employeeId") int employeeId) {
         final Team team = teamDAO.get(id);
-        final Employee employee = employeeDAO.get(employeeId);
-        team.addMember(employee);
+        final Employee employee = (Employee) basicDAO.get(Employee.class, employeeId);
+        teamDAO.addMember(team, employee);
         return Response.noContent().build();
     }
 
