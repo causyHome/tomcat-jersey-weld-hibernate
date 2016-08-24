@@ -10,7 +10,9 @@ public interface BasicDAO {
 
     void update(Object team);
 
-    List<Object> list(Class entityClass);
+    List list(Class entityClass);
 
     long count(Class entityClass);
+
+    void deleteAll(Class entityClass);
 }

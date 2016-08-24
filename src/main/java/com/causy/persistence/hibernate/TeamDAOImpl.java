@@ -2,29 +2,36 @@ package com.causy.persistence.hibernate;
 
 import com.causy.model.Employee;
 import com.causy.model.Team;
+import com.causy.persistence.dao.BasicDAO;
 import com.causy.persistence.dao.TeamDAO;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static com.causy.persistence.hibernate.HibernateUtils.executeTransactionalHibernateOperation;
 
 public class TeamDAOImpl implements TeamDAO {
+
+    private final BasicDAO basicDAO;
+
+    @Inject
+    public TeamDAOImpl(BasicDAO basicDAO) {
+        this.basicDAO = basicDAO;
+    }
+
     @Override
     public int create(Team newTeam) {
-        return (int) executeTransactionalHibernateOperation(session -> session.save(newTeam), "Could not create entity!");
+        return basicDAO.create(newTeam);
     }
 
     @Override
     public Team get(int teamId) {
-        return (Team) executeTransactionalHibernateOperation(session -> session.get(Team.class, teamId), String.format("Could not find entity with Id %s", teamId));
+        return (Team) basicDAO.get(Team.class, teamId);
     }
 
     @Override
     public void update(Team team) {
-        executeTransactionalHibernateOperation(session -> {
-            session.update(team);
-            return null;
-        }, "Something went wrong when trying to update entity, it probably doesnt exist");
+        basicDAO.update(team);
     }
 
     @Override
@@ -34,16 +41,16 @@ public class TeamDAOImpl implements TeamDAO {
             team.addMember(employee);
             session.update(team);
             return null;
-        }, "");
+        }, String.format("Could not add member %s to team %s !", employee, team));
     }
 
     @Override
     public List<Team> list() {
-        return (List<Team>) executeTransactionalHibernateOperation(session -> session.createCriteria(Team.class).list(), "Could not get list of entity");
+        return (List<Team>) basicDAO.list(Team.class);
     }
 
     @Override
-    public int count() {
-        return (int) executeTransactionalHibernateOperation(session -> session.createQuery("select count(*) from Team ").uniqueResult(), "Could not get count of entity");
+    public long count() {
+        return basicDAO.count(Team.class);
     }
 }

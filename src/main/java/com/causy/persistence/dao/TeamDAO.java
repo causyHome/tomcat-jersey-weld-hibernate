@@ -16,5 +16,5 @@ public interface TeamDAO {
 
     List<Team> list();
 
-    int count();
+    long count();
 }

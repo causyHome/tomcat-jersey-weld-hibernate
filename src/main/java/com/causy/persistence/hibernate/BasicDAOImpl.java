@@ -14,7 +14,8 @@ public class BasicDAOImpl implements BasicDAO {
 
     @Override
     public Object get(Class entityClass, int entityId) {
-        return executeTransactionalHibernateOperation(session -> session.get(entityClass, entityId), String.format("Could not find entity with Id %s", entityId));
+        return executeTransactionalHibernateOperation(session -> session.get(entityClass, entityId),
+                String.format("Could not find entity with Id %s", entityId));
     }
 
     @Override
@@ -22,16 +23,26 @@ public class BasicDAOImpl implements BasicDAO {
         executeTransactionalHibernateOperation(session -> {
             session.update(entity);
             return null;
-        }, "Something went wrong when trying to update entity, it probably doesnt exist");
+        }, String.format("Something went wrong when trying to update entity %s, it probably doesnt exist", entity));
     }
 
     @Override
-    public List<Object> list(Class entityClass) {
-        return (List<Object>) executeTransactionalHibernateOperation(session -> session.createCriteria(entityClass).list(), String.format("Could not get list of entity %s", entityClass.getSimpleName()));
+    public List list(Class entityClass) {
+        return (List) executeTransactionalHibernateOperation(session -> session.createCriteria(entityClass).list(),
+                String.format("Could not get list of entity %s", entityClass.getSimpleName()));
     }
 
     @Override
     public long count(Class entityClass) {
-        return (long) executeTransactionalHibernateOperation(session -> session.createQuery("select count(*) from " + entityClass.getSimpleName()).uniqueResult(), "Could not get count of entity");
+        return (long) executeTransactionalHibernateOperation(session -> session.createQuery("select count(*) from " + entityClass.getSimpleName()).uniqueResult(),
+                "Could not get count of entity");
+    }
+
+    @Override
+    public void deleteAll(Class entityClass) {
+        executeTransactionalHibernateOperation(session -> {
+            session.createQuery("delete from " + entityClass.getSimpleName()).executeUpdate();
+            return null;
+        }, "Could not delete all entries of" + entityClass.getSimpleName());
     }
 }

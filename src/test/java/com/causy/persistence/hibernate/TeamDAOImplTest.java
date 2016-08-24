@@ -10,7 +10,7 @@ import org.junit.rules.ExpectedException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TeamDAOImplTest {
-    private final TeamDAO teamDAO = new TeamDAOImpl();
+    private final TeamDAO teamDAO = new TeamDAOImpl(new BasicDAOImpl());
 
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
