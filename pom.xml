@@ -225,7 +225,7 @@
                 </configuration>
             </plugin>
 
-            <!-- we tell failsage to specifically run integration tests during 'integration-test' phase (after the war has been generated) -->
+            <!-- we tell failsafe to specifically run integration tests during 'integration-test' phase (after the war has been generated) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
