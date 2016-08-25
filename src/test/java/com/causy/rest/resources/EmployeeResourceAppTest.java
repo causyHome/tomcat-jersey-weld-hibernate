@@ -1,21 +1,20 @@
 package com.causy.rest.resources;
 
-import com.causy.model.Employee;
-import com.causy.persistence.dao.BasicDAO;
-import org.assertj.core.api.Assertions;
+import io.restassured.http.ContentType;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
 import java.io.File;
-import java.net.URISyntaxException;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(Arquillian.class)
 public class EmployeeResourceAppTest {
@@ -23,7 +22,7 @@ public class EmployeeResourceAppTest {
     @Inject
     EmployeeResource resource;
 
-    @Deployment
+    @Deployment(testable = false)
     public static WebArchive createDeployment() {
         File[] lib = Maven.resolver()
                 .resolve("org.jboss.weld.servlet:weld-servlet:2.2.9.Final",
@@ -51,9 +50,17 @@ public class EmployeeResourceAppTest {
 
     @Test
     public void test() throws Exception {
-        final Response employeeCreationResponse = resource.createEmployee(new Employee("Thomas", "admin"));
+        given()
+            .contentType(ContentType.JSON)
+            .body("{\"name\": \"Thomas\", \"role\":\"admin\"}")
+            .post("/tomcat-jersey-weld-hibernate/service/employee");
 
 
-        Assertions.assertThat(employeeCreationResponse.getStatus()).isEqualTo(201);
+        when()
+            .get("/tomcat-jersey-weld-hibernate/service/employee")
+        .then()
+            .statusCode(200)
+            .body("name[0]", equalTo("Thomas"))
+            .body("role[0]", equalTo("admin"));
     }
 }
