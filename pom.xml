@@ -217,6 +217,41 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <!-- we tell surefire not to run integration tests during 'test' phase (unit test phase) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                        <exclude>**/*AppTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- we tell failsage to specifically run integration tests during 'integration-test' phase (after the war has been generated) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <includes>
+                        <include>**/*IntegrationTest.java</include>
+                        <include>**/*AppTest.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
