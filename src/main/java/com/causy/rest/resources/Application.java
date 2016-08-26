@@ -9,7 +9,6 @@ public class Application extends ResourceConfig {
 
     public Application() {
 
-        register(EmployeeResource.class);
-        register(TeamResource.class);
+        packages(false, "com.causy.rest.resources");
     }
 }
