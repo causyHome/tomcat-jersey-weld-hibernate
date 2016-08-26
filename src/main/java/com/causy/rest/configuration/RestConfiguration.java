@@ -1,14 +1,13 @@
-package com.causy.rest.resources;
+package com.causy.rest.configuration;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.ApplicationPath;
 
 @ApplicationPath("/service/")
-public class Application extends ResourceConfig {
+public class RestConfiguration extends ResourceConfig {
 
-    public Application() {
-
+    public RestConfiguration() {
         packages(false, "com.causy.rest.resources");
     }
 }
