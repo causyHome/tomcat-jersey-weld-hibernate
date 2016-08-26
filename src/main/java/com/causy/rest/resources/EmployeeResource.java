@@ -1,7 +1,9 @@
 package com.causy.rest.resources;
 
+import com.causy.cache.CacheProducer;
 import com.causy.model.Employee;
 import com.causy.persistence.dao.BasicDAO;
+import org.infinispan.Cache;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -20,9 +22,11 @@ import java.net.URISyntaxException;
 public class EmployeeResource {
 
     private final BasicDAO basicDAO;
+    private final Cache<Integer, Employee> cache;
 
     @Inject
     public EmployeeResource(BasicDAO basicDAO) {
+        this.cache = CacheProducer.singleton.getCacheManager().getCache(Employee.class.getCanonicalName());
         this.basicDAO = basicDAO;
     }
 
@@ -31,7 +35,12 @@ public class EmployeeResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeeById(@PathParam("id") final int id) {
-        return Response.ok(basicDAO.get(null, id)).build();
+        Employee employee = cache.get(id);
+        if (employee == null) {
+            employee = (Employee) basicDAO.get(Employee.class, id);
+            cache.put(id, employee);
+        }
+        return Response.ok(employee).build();
     }
 
     @GET

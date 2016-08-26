@@ -1,9 +1,11 @@
 package com.causy.rest.resources;
 
+import com.causy.cache.CacheProducer;
 import com.causy.model.Employee;
 import com.causy.model.Team;
 import com.causy.persistence.dao.BasicDAO;
 import com.causy.persistence.dao.TeamDAO;
+import org.infinispan.Cache;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -23,9 +25,11 @@ public class TeamResource {
 
     private final TeamDAO teamDAO;
     private final BasicDAO basicDAO;
+    private final Cache<Integer, Team> cache;
 
     @Inject
     public TeamResource(TeamDAO teamDAO, BasicDAO basicDAO) {
+        this.cache = CacheProducer.singleton.getCacheManager().getCache(Team.class.getCanonicalName());
         this.teamDAO = teamDAO;
         this.basicDAO = basicDAO;
     }
@@ -34,7 +38,12 @@ public class TeamResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTeamById(@PathParam("id") final int id) {
-        return Response.ok(teamDAO.get(id)).build();
+        Team team = cache.get(id);
+        if (team == null) {
+            team = teamDAO.get(id);
+            cache.put(id, team);
+        }
+        return Response.ok(team).build();
     }
 
     @GET

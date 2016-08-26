@@ -12,8 +12,8 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-enum SessionFactoryManager  {
-    instance;
+public enum SessionFactoryManager  {
+    singleton;
 
     private SessionFactory sessionFactory;
     private final Logger logger = Logger.getLogger("SessionFactoryManagerLogger");

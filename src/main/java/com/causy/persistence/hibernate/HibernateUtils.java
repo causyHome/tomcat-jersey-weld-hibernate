@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 class HibernateUtils {
 
     static Object executeTransactionalHibernateOperation(final HibernateTransactionalOperation operation, String errorMessage) {
-        SessionFactory sessionFactory = SessionFactoryManager.instance.getSessionFactory();
+        SessionFactory sessionFactory = SessionFactoryManager.singleton.getSessionFactory();
 
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();

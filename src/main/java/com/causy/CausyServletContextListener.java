@@ -1,16 +1,20 @@
-package com.causy.persistence.hibernate;
+package com.causy;
 
+
+import com.causy.cache.CacheProducer;
+import com.causy.persistence.hibernate.SessionFactoryManager;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
-public class PersistenceServletContextListener implements ServletContextListener {
+public class CausyServletContextListener implements javax.servlet.ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        SessionFactoryManager.instance.destroySessionFactory();
+        SessionFactoryManager.singleton.destroySessionFactory();
+        CacheProducer.singleton.destroyCacheManager();
     }
 
     @Override
