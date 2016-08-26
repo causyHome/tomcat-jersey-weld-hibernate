@@ -19,9 +19,6 @@ import static org.hamcrest.Matchers.equalTo;
 @RunWith(Arquillian.class)
 public class EmployeeResourceAppTest {
 
-    @Inject
-    EmployeeResource resource;
-
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         File[] lib = Maven.resolver()
