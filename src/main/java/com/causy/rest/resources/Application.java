@@ -9,9 +9,7 @@ public class Application extends ResourceConfig {
 
     public Application() {
 
-        register(PersonResource.class);
         register(EmployeeResource.class);
         register(TeamResource.class);
-        register(MessageResource.class);
     }
 }
