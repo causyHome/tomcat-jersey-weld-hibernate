@@ -25,8 +25,7 @@ public class EmployeeResourceAppTest {
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         File[] lib = Maven.resolver()
-                .resolve("org.jboss.weld.servlet:weld-servlet:2.2.9.Final",
-                        "el-impl:el-impl:1.0")
+                .resolve("el-impl:el-impl:1.0")
                 .withTransitivity()
                 .as(File.class);
 
@@ -52,15 +51,14 @@ public class EmployeeResourceAppTest {
     public void test() throws Exception {
         given()
             .contentType(ContentType.JSON)
-            .body("{\"name\": \"Thomas\", \"role\":\"admin\"}")
+            .body("{\"name\": \"Thomas-REST\", \"role\":\"admin\"}")
             .post("/tomcat-jersey-weld-hibernate/service/employee");
-
 
         when()
             .get("/tomcat-jersey-weld-hibernate/service/employee")
         .then()
             .statusCode(200)
-            .body("name[0]", equalTo("Thomas"))
+            .body("name[0]", equalTo("Thomas-REST"))
             .body("role[0]", equalTo("admin"));
     }
 }
