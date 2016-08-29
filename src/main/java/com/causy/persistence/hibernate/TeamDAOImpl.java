@@ -21,7 +21,8 @@ public class TeamDAOImpl implements TeamDAO {
 
     @Override
     public int create(Team newTeam) {
-        return basicDAO.create(newTeam);
+        basicDAO.create(newTeam);
+        return newTeam.getId();
     }
 
     @Override

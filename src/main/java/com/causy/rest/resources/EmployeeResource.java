@@ -53,7 +53,8 @@ public class EmployeeResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEmployee(Employee newEmployee) throws URISyntaxException {
 
-        final int id = basicDAO.create(newEmployee);
+        basicDAO.create(newEmployee);
+        final int id = newEmployee.getId();
         return Response.created(new URI("/service/employee/" + id)).build();
     }
 

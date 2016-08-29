@@ -4,11 +4,11 @@ package com.causy.persistence.dao;
 import java.util.List;
 
 public interface BasicDAO {
-    int create(Object newTeam);
+    Object create(Object newEntity);
 
-    Object get(Class entityClass, int teamId);
+    Object get(Class entityClass, int entityId);
 
-    void update(Object team);
+    Object update(Object entity);
 
     List list(Class entityClass);
 
