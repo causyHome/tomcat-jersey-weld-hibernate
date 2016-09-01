@@ -38,7 +38,9 @@ public class EmployeeResource {
         Employee employee = cache.get(id);
         if (employee == null) {
             employee = (Employee) basicDAO.get(Employee.class, id);
-            cache.put(id, employee);
+            if (employee != null) {
+                cache.put(id, employee);
+            }
         }
         return Response.ok(employee).build();
     }

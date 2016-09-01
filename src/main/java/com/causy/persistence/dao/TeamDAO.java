@@ -17,4 +17,6 @@ public interface TeamDAO {
     List<Team> list();
 
     long count();
+
+    void delete(int existingTeam);
 }

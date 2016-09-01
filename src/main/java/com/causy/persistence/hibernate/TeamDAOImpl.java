@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static com.causy.persistence.hibernate.HibernateUtils.executeTransactionalHibernateOperation;
+import static com.causy.persistence.hibernate.HibernateUtils.executeTransactionalJPAOperation;
 
 public class TeamDAOImpl implements TeamDAO {
 
@@ -53,5 +54,14 @@ public class TeamDAOImpl implements TeamDAO {
     @Override
     public long count() {
         return basicDAO.count(Team.class);
+    }
+
+    @Override
+    public void delete(int teamId) {
+        executeTransactionalJPAOperation(entityManager -> {
+            final Team team = entityManager.find(Team.class, teamId);
+            entityManager.remove(team);
+            return null;
+        }, String.format("Could not delete team with id %s", teamId));
     }
 }

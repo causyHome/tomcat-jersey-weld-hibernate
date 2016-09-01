@@ -9,6 +9,7 @@ import org.infinispan.Cache;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -41,7 +42,9 @@ public class TeamResource {
         Team team = cache.get(id);
         if (team == null) {
             team = teamDAO.get(id);
-            cache.put(id, team);
+            if (team != null) {
+                cache.put(id, team);
+            }
         }
         return Response.ok(team).build();
     }
@@ -72,6 +75,13 @@ public class TeamResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTeam(Team existingTeam) {
         teamDAO.update(existingTeam);
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Response deleteTeam(@PathParam("id") final int teamId) {
+        teamDAO.delete(teamId);
         return Response.noContent().build();
     }
 }

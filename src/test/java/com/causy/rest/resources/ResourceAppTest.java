@@ -14,7 +14,6 @@ import java.io.File;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(Arquillian.class)
 public class ResourceAppTest {
@@ -53,29 +52,6 @@ public class ResourceAppTest {
         .then()
             .statusCode(201)
             .header("Location", containsString("service/employee"));
-    }
-
-
-    @Test
-    public void should_list_employees() throws Exception {
-        given()
-            .contentType(ContentType.JSON)
-            .body("{\"name\": \"employee1\", \"role\":\"admin\"}")
-            .post("/tomcat-jersey-weld-hibernate/service/employee");
-        given()
-            .contentType(ContentType.JSON)
-            .body("{\"name\": \"employee2\", \"role\":\"admin\"}")
-            .post("/tomcat-jersey-weld-hibernate/service/employee");
-
-
-        when()
-            .get("/tomcat-jersey-weld-hibernate/service/employee")
-        .then()
-            .statusCode(200)
-            .body("name[0]", equalTo("employee1"))
-            .body("role[0]", equalTo("admin"))
-            .body("name[1]", equalTo("employee2"))
-            .body("role[1]", equalTo("admin"));
     }
 
     @Test
@@ -119,6 +95,45 @@ public class ResourceAppTest {
             .put("/tomcat-jersey-weld-hibernate/service/team/" + teamId+ "/member/" + employeeId)
         .then()
             .statusCode(204);
+    }
 
+
+
+    @Test
+    public void should_delete_team_with_members() throws Exception{
+        String locationHeaderValue =  given()
+            .contentType(ContentType.JSON)
+            .body("{\"name\": \"team\"}")
+            .post("/tomcat-jersey-weld-hibernate/service/team")
+        .then()
+            .statusCode(201)
+            .header("Location", containsString("service/team"))
+            .extract().header("Location");
+
+        String[] strings = locationHeaderValue.split("/");
+        String teamId = strings[strings.length - 1];
+
+        locationHeaderValue = given()
+            .contentType(ContentType.JSON)
+            .body("{\"name\": \"employee\", \"role\":\"admin\"}")
+            .post("/tomcat-jersey-weld-hibernate/service/employee")
+        .then()
+            .statusCode(201)
+            .header("Location", containsString("service/employee")).extract().header("Location");
+
+
+        strings = locationHeaderValue.split("/");
+        String employeeId = strings[strings.length - 1];
+
+        when()
+            .put("/tomcat-jersey-weld-hibernate/service/team/" + teamId+ "/member/" + employeeId)
+        .then()
+            .statusCode(204);
+
+
+        when()
+            .delete("/tomcat-jersey-weld-hibernate/service/team/" + teamId)
+        .then()
+            .statusCode(204);
     }
 }
