@@ -1,5 +1,7 @@
 package com.causy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class Employee {
     @Column(name = "insert_time")
     private long insertTime;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;

@@ -1,4 +1,4 @@
-package com.causy.rest.configuration;
+package com.causy.rest.configuration.jersey;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
