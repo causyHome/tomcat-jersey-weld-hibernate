@@ -2,8 +2,10 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
-    <persistence-unit name="com.causy.poc.persistence">
+    <persistence-unit name="com.causy.poc.persistence" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.causy.model.Employee</class>
+        <class>com.causy.model.Team</class>
         <properties>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
@@ -14,7 +16,7 @@
             <property name="hibernate.connection.pool_size" value="1"/>
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.internal.NoCacheProvider"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.hibernate.c3p0.timeout" value="7200"/>
             <property name="hibernate.hibernate.c3p0.max_statements" value="10"/>
         </properties>
