@@ -7,6 +7,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -16,8 +18,13 @@ public enum SessionFactoryManager  {
     singleton;
 
     private SessionFactory sessionFactory;
+    private EntityManagerFactory entityManagerFactory;
     private final Logger logger = Logger.getLogger("SessionFactoryManagerLogger");
 
+
+    private EntityManagerFactory setupEntityManagerFactory() {
+        return Persistence.createEntityManagerFactory( "com.causy.poc.persistence" );
+    }
 
     private SessionFactory setupSessionFactory() {
         Configuration configuration = new Configuration();
@@ -57,5 +64,12 @@ public enum SessionFactoryManager  {
             sessionFactory.close();
         }
         logger.info("Released Hibernate sessionFactory resource");
+    }
+
+    public EntityManagerFactory getEntityManagerFactory() {
+        if (entityManagerFactory == null){
+            entityManagerFactory = setupEntityManagerFactory();
+        }
+        return entityManagerFactory;
     }
 }

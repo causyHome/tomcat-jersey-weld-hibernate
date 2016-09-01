@@ -25,6 +25,7 @@
         <version.arquillian-tomcat-embedded-8>1.0.0.CR7</version.arquillian-tomcat-embedded-8>
         <version.arquillian-junit-container>1.1.11.Final</version.arquillian-junit-container>
         <version.infinispan>8.2.4.Final</version.infinispan>
+        <version.hibernate>4.3.5.Final</version.hibernate>
     </properties>
 
     <dependencies>
@@ -84,7 +85,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.3.5.Final</version>
+            <version>${version.hibernate}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${version.hibernate}</version>
         </dependency>
         <dependency> <!-- This is needed by hibernate :/ -->
             <groupId>org.jboss</groupId>
