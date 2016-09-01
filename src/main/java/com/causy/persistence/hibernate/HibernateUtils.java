@@ -42,7 +42,7 @@ class HibernateUtils {
             tx.commit();
             return returnedData;
         } catch (RollbackException e) {
-            if (tx != null) {
+            if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
             throw new IllegalStateException(errorMessage, e);

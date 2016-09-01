@@ -20,9 +20,9 @@ public class TeamDAOImpl implements TeamDAO {
     }
 
     @Override
-    public int create(Team newTeam) {
+    public Team create(Team newTeam) {
         basicDAO.create(newTeam);
-        return newTeam.getId();
+        return newTeam;
     }
 
     @Override
@@ -31,8 +31,8 @@ public class TeamDAOImpl implements TeamDAO {
     }
 
     @Override
-    public void update(Team team) {
-        basicDAO.update(team);
+    public Team update(Team team) {
+        return (Team) basicDAO.update(team);
     }
 
     @Override

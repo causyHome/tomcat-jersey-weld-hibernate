@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -29,13 +30,15 @@ public class Team {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Employee> members;
 
-    public Team(int id, String name, List<Employee> teamMembers) {
+    public Team(int id, String name, List<Employee> members) {
         this.id = id;
         this.name = name;
+        this.members = members;
     }
 
     public Team(String name) {
         this.name = name;
+        this.members = Collections.emptyList();
     }
 
     public Team() {
@@ -63,5 +66,9 @@ public class Team {
             members = new ArrayList<>();
         }
         members.add(employee);
+    }
+
+    public String toString() {
+        return "Team - " + name;
     }
 }

@@ -111,20 +111,4 @@ public class BasicDAOImplTest {
         final Employee employee = (Employee) basicDAO.get(Employee.class, employee1.getId());
         assertThat((employee).getRole()).isEqualTo("admin");
     }
-
-    @Test
-    public void should_not_be_able_to_update_non_existing_employee() throws Exception {
-        //given
-        Employee employee1 = new Employee("Thomas", "test");
-        basicDAO.create(employee1);
-        final int id1 = employee1.getId();
-
-       
-        //when
-        basicDAO.update(new Employee(id1 + 1, "Thomas", "admin"));
-
-        //then
-        employee1 = (Employee) basicDAO.get(Employee.class, id1);
-        assertThat(employee1.getRole()).isEqualTo("test");
-    }
 }
