@@ -1,24 +1,19 @@
 image: maven:3-jdk-8
 
-cache:
-  paths:
-    - ~/.m2/repository
-
-
 build:
   stage: build
-  script: "mvn clean package -B -DskipTests -DskipITs -Dfindbugs.skip=true -T1.5C"
+  script: "mvn clean package -B -DskipTests -DskipITs -Dfindbugs.skip=true -T1.5C -Dmaven.repo.local=/cache"
 
 
 tests:
   stage: test
-  script: "mvn test -B -T1.5C -Dfindbugs.skip=true"
+  script: "mvn test -B -T1.5C -Dfindbugs.skip=true -Dmaven.repo.local=/cache"
 
 code-quality:
   stage: test
-  script: "mvn compile -B -T1.5C"
+  script: "mvn compile -B -T1.5C -Dmaven.repo.local=/cache"
 
 
 integration-tests:
   stage: test
-  script: "mvn verify -B -T1.5C -DskipTests -Dfindbugs.skip=true"
+  script: "mvn verify -B -T1.5C -DskipTests -Dfindbugs.skip=true -Dmaven.repo.local=/cache"
