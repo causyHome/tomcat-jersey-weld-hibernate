@@ -7,7 +7,7 @@ build:
 
 tests:
   stage: test
-  script: "mvn clean verify -B -T1.5C -DskiptITs"
+  script: "mvn clean verify -B -T1.5C -DskipITs"
 
 
 integration-tests:
