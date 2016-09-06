@@ -12,13 +12,13 @@ build:
 
 tests:
   stage: test
-  script: "mvn clean test -B -T1.5C -Dfindbugs.skip=true"
+  script: "mvn test -B -T1.5C -Dfindbugs.skip=true"
 
 code-quality:
   stage: test
-  script: "mvn clean compile -B -T1.5C"
+  script: "mvn compile -B -T1.5C"
 
 
 integration-tests:
   stage: test
-  script: "mvn clean verify -B -T1.5C -DskipTests -Dfindbugs.skip=true"
+  script: "mvn verify -B -T1.5C -DskipTests -Dfindbugs.skip=true"
