@@ -7,7 +7,11 @@ build:
 
 tests:
   stage: test
-  script: "mvn clean verify -B -T1.5C -DskipITs"
+  script: "mvn clean test -B -T1.5C -Dfindbugs.skip=true"
+
+code-quality:
+  stage: test
+  script: "mvn clean compile -B -T1.5C"
 
 
 integration-tests:
