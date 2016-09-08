@@ -37,9 +37,6 @@ public class ResourceAppTest {
         WebArchive causyPocWar = ShrinkWrap.createFromZipFile(WebArchive.class, new File("./target/tomcat-jersey-weld-hibernate.war"));
         causyPocWar.addAsLibraries(lib);
 
-        // replacing prod hibernate settings in war with test properties
-        causyPocWar.addAsResource(new File("src/test/resources/hibernate.properties"));
-
         return causyPocWar;
     }
 
