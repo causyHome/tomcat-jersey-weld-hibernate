@@ -1,14 +1,14 @@
-package com.causy.persistence.hibernate;
+package com.causy.persistence.impl;
 
 import com.causy.model.Employee;
 import com.causy.model.Team;
-import com.causy.persistence.dao.BasicDAO;
-import com.causy.persistence.dao.TeamDAO;
+import com.causy.persistence.api.BasicDAO;
+import com.causy.persistence.api.TeamDAO;
 
 import javax.inject.Inject;
 import java.util.List;
 
-import static com.causy.persistence.hibernate.HibernateUtils.executeTransactionalJPAOperation;
+import static com.causy.persistence.impl.JpaUtils.executeTransactionalJPAOperation;
 
 public class TeamDAOImpl implements TeamDAO {
 

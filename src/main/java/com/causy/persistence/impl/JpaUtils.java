@@ -1,10 +1,12 @@
-package com.causy.persistence.hibernate;
+package com.causy.persistence.impl;
+
+import com.causy.persistence.PersistenceSingleton;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.RollbackException;
 
-class HibernateUtils {
+class JpaUtils {
 
     static Object executeTransactionalJPAOperation(final JPATransactionalOperation operation, String errorMessage) {
         EntityManager em = PersistenceSingleton.instance.getEntityManagerFactory().createEntityManager();

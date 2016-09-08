@@ -2,7 +2,7 @@ package com.causy.rest.resources;
 
 import com.causy.cache.CacheProducer;
 import com.causy.model.Employee;
-import com.causy.persistence.dao.BasicDAO;
+import com.causy.persistence.api.BasicDAO;
 import org.infinispan.Cache;
 
 import javax.inject.Inject;

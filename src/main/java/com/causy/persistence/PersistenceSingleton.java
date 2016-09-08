@@ -1,4 +1,4 @@
-package com.causy.persistence.hibernate;
+package com.causy.persistence;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

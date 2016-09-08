@@ -1,10 +1,10 @@
-package com.causy.persistence.hibernate;
+package com.causy.persistence.impl;
 
-import com.causy.persistence.dao.BasicDAO;
+import com.causy.persistence.api.BasicDAO;
 
 import java.util.List;
 
-import static com.causy.persistence.hibernate.HibernateUtils.executeTransactionalJPAOperation;
+import static com.causy.persistence.impl.JpaUtils.executeTransactionalJPAOperation;
 
 public class BasicDAOImpl implements BasicDAO {
     @Override

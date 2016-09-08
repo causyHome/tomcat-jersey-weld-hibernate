@@ -1,4 +1,4 @@
-package com.causy.persistence.hibernate;
+package com.causy.persistence.impl;
 
 import javax.persistence.EntityManager;
 

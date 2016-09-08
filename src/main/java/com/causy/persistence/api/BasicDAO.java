@@ -1,4 +1,4 @@
-package com.causy.persistence.dao;
+package com.causy.persistence.api;
 
 
 import java.util.List;

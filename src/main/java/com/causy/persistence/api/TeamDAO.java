@@ -1,4 +1,4 @@
-package com.causy.persistence.dao;
+package com.causy.persistence.api;
 
 import com.causy.model.Employee;
 import com.causy.model.Team;

@@ -2,7 +2,7 @@ package com.causy;
 
 
 import com.causy.cache.CacheProducer;
-import com.causy.persistence.hibernate.PersistenceSingleton;
+import com.causy.persistence.PersistenceSingleton;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;

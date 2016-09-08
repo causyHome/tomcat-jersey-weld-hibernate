@@ -3,8 +3,8 @@ package com.causy.rest.resources;
 import com.causy.cache.CacheProducer;
 import com.causy.model.Employee;
 import com.causy.model.Team;
-import com.causy.persistence.dao.BasicDAO;
-import com.causy.persistence.dao.TeamDAO;
+import com.causy.persistence.api.BasicDAO;
+import com.causy.persistence.api.TeamDAO;
 import org.infinispan.Cache;
 
 import javax.inject.Inject;
