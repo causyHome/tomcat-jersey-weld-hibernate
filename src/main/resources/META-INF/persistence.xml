@@ -11,7 +11,7 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             <property name="hibernate.current_session_context_class" value="thread"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/causy"/>
-            <property name="hibernate.connection.username" value="thomas"/>
+            <property name="hibernate.connection.username" value="causy"/>
             <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.connection.pool_size" value="1"/>
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.internal.NoCacheProvider"/>
