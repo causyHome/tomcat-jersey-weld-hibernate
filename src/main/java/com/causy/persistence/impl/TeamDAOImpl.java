@@ -8,7 +8,7 @@ import com.causy.persistence.api.TeamDAO;
 import javax.inject.Inject;
 import java.util.List;
 
-import static com.causy.persistence.impl.JpaUtils.executeTransactionalJPAOperation;
+import static com.causy.persistence.impl.JpaUtils.executeTransactionalJpaOperation;
 
 public class TeamDAOImpl implements TeamDAO {
 
@@ -37,7 +37,7 @@ public class TeamDAOImpl implements TeamDAO {
 
     @Override
     public void addMember(Team team, Employee employee) {
-        executeTransactionalJPAOperation(entityManager -> {
+        executeTransactionalJpaOperation(entityManager -> {
             employee.setTeam(team);
             team.addMember(employee);
             entityManager.merge(team);
@@ -57,7 +57,7 @@ public class TeamDAOImpl implements TeamDAO {
 
     @Override
     public void delete(int teamId) {
-        executeTransactionalJPAOperation(entityManager -> {
+        executeTransactionalJpaOperation(entityManager -> {
             final Team team = entityManager.find(Team.class, teamId);
             entityManager.remove(team);
             return null;

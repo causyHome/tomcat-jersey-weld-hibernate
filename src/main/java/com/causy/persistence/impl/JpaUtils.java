@@ -8,7 +8,7 @@ import javax.persistence.RollbackException;
 
 class JpaUtils {
 
-    static Object executeTransactionalJPAOperation(final JPATransactionalOperation operation, String errorMessage) {
+    static Object executeTransactionalJpaOperation(final JPATransactionalOperation operation, String errorMessage) {
         EntityManager em = PersistenceSingleton.instance.getEntityManagerFactory().createEntityManager();
 
         final EntityTransaction tx = em.getTransaction();

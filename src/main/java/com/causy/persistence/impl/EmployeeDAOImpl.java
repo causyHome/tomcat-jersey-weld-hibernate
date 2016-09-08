@@ -1,14 +1,13 @@
 package com.causy.persistence.impl;
 
 import com.causy.model.Employee;
-import com.causy.model.Team;
 import com.causy.persistence.api.BasicDAO;
 import com.causy.persistence.api.EmployeeDAO;
 
 import javax.inject.Inject;
 import java.util.List;
 
-import static com.causy.persistence.impl.JpaUtils.executeTransactionalJPAOperation;
+import static com.causy.persistence.impl.JpaUtils.executeTransactionalJpaOperation;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
@@ -48,7 +47,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void delete(int employeeId) {
-        executeTransactionalJPAOperation(entityManager -> {
+        executeTransactionalJpaOperation(entityManager -> {
             final Employee employee = entityManager.find(Employee.class, employeeId);
             entityManager.remove(employee);
             return null;
