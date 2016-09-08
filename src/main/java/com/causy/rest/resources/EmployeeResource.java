@@ -2,7 +2,7 @@ package com.causy.rest.resources;
 
 import com.causy.cache.CacheProducer;
 import com.causy.model.Employee;
-import com.causy.persistence.api.BasicDAO;
+import com.causy.persistence.api.EmployeeDAO;
 import org.infinispan.Cache;
 
 import javax.inject.Inject;
@@ -21,13 +21,13 @@ import java.net.URISyntaxException;
 @Path("employee")
 public class EmployeeResource {
 
-    private final BasicDAO basicDAO;
+    private final EmployeeDAO employeeDAO;
     private final Cache<Integer, Employee> cache;
 
     @Inject
-    public EmployeeResource(BasicDAO basicDAO) {
+    public EmployeeResource(EmployeeDAO employeeDAO) {
         this.cache = CacheProducer.singleton.getCacheManager().getCache(Employee.class.getCanonicalName());
-        this.basicDAO = basicDAO;
+        this.employeeDAO = employeeDAO;
     }
 
 
@@ -37,7 +37,7 @@ public class EmployeeResource {
     public Response getEmployeeById(@PathParam("id") final int id) {
         Employee employee = cache.get(id);
         if (employee == null) {
-            employee = (Employee) basicDAO.get(Employee.class, id);
+            employee = (Employee) employeeDAO.get(id);
             if (employee != null) {
                 cache.put(id, employee);
             }
@@ -48,14 +48,14 @@ public class EmployeeResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listEmployees() {
-        return Response.ok(basicDAO.list(Employee.class)).build();
+        return Response.ok(employeeDAO.list()).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEmployee(Employee newEmployee) throws URISyntaxException {
 
-        basicDAO.create(newEmployee);
+        employeeDAO.create(newEmployee);
         final int id = newEmployee.getId();
         return Response.created(new URI("/service/employee/" + id)).build();
     }
@@ -63,7 +63,7 @@ public class EmployeeResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateEmployee(Employee existingEmployee) {
-        basicDAO.update(existingEmployee);
+        employeeDAO.update(existingEmployee);
         return Response.noContent().build();
     }
 
