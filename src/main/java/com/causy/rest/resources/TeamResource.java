@@ -58,7 +58,7 @@ public class TeamResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createTeam(Team newTeam) throws URISyntaxException {
-        final Team team = (Team) teamDAO.create(newTeam);
+        final Team team = teamDAO.create(newTeam);
         return Response.created(new URI("/service/team/" + team.getId())).build();
     }
 

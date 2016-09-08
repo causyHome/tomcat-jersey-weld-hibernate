@@ -8,7 +8,6 @@ import com.causy.persistence.dao.TeamDAO;
 import javax.inject.Inject;
 import java.util.List;
 
-import static com.causy.persistence.hibernate.HibernateUtils.executeTransactionalHibernateOperation;
 import static com.causy.persistence.hibernate.HibernateUtils.executeTransactionalJPAOperation;
 
 public class TeamDAOImpl implements TeamDAO {
@@ -38,10 +37,10 @@ public class TeamDAOImpl implements TeamDAO {
 
     @Override
     public void addMember(Team team, Employee employee) {
-        executeTransactionalHibernateOperation(session -> {
+        executeTransactionalJPAOperation(entityManager -> {
             employee.setTeam(team);
             team.addMember(employee);
-            session.update(team);
+            entityManager.merge(team);
             return null;
         }, String.format("Could not add member %s to team %s !", employee, team));
     }
