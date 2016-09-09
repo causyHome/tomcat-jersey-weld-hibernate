@@ -3,6 +3,6 @@ package com.causy.persistence.impl;
 import javax.persistence.EntityManager;
 
 @FunctionalInterface
-interface JPATransactionalOperation {
+interface JPAOperation {
     Object execute(EntityManager entityManager);
 }
