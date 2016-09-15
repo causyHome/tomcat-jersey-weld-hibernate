@@ -4,7 +4,7 @@ import org.infinispan.Cache;
 
 import java.util.function.Function;
 
-public class CacheHandler {
+public class CacheHandler<E> {
 
     @FunctionalInterface
     public interface CacheFunction1<K, E> {
@@ -16,16 +16,15 @@ public class CacheHandler {
         E usingCacheKey(K cacheKey);
     }
 
-
-    public static CacheFunction1<Integer, Object> getEntityFromCache(String cacheName) {
-        Cache cache = CacheProducer.singleton.getCacheManager().getCache(cacheName);
-        return new CacheFunction1<Integer, Object>() {
+    public CacheFunction1<Integer, E> getEntityFromCache(String cacheName) {
+        Cache<Integer, E> cache = CacheProducer.singleton.getCacheManager().getCache(cacheName);
+        return new CacheFunction1<Integer, E>() {
             @Override
-            public CacheFunction2<Integer, Object> orFromSource(Function<Integer, Object> source) {
-                return new CacheFunction2<Integer, Object>() {
+            public CacheFunction2<Integer, E> orFromSource(Function<Integer, E> source) {
+                return new CacheFunction2<Integer, E>() {
                     @Override
-                    public Object usingCacheKey(Integer entityId) {
-                        Object entity = cache.get(entityId);
+                    public E usingCacheKey(Integer entityId) {
+                        E entity = cache.get(entityId);
                         if (entity == null) {
                             entity = source.apply(entityId);
                             if (entity != null) {

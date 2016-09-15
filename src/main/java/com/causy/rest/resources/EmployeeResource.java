@@ -1,5 +1,6 @@
 package com.causy.rest.resources;
 
+import com.causy.cache.CacheHandler;
 import com.causy.model.Employee;
 import com.causy.persistence.api.EmployeeDAO;
 
@@ -16,23 +17,24 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static com.causy.cache.CacheHandler.getEntityFromCache;
 
 @Path("employee")
 public class EmployeeResource {
 
     private final EmployeeDAO employeeDAO;
+    private final CacheHandler<Employee> cacheHandler;
 
     @Inject
-    public EmployeeResource(EmployeeDAO employeeDAO) {
+    public EmployeeResource(EmployeeDAO employeeDAO, CacheHandler<Employee> cacheHandler) {
         this.employeeDAO = employeeDAO;
+        this.cacheHandler = cacheHandler;
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeeById(@PathParam("id") final int id) {
-        Employee employee = (Employee) getEntityFromCache("EmployeeCache").orFromSource(employeeDAO::get).usingCacheKey(id);
+        Employee employee = cacheHandler.getEntityFromCache("EmployeeCache").orFromSource(employeeDAO::get).usingCacheKey(id);
 
 
         return Response.ok(employee).build();
