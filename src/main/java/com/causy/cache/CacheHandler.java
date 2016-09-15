@@ -2,18 +2,26 @@ package com.causy.cache;
 
 import org.infinispan.Cache;
 
+import java.util.function.Function;
+
 public class CacheHandler {
 
-    public static Object getEntityFromCacheOr(NonCachedEntitySource source, int id, Class cachedEntityClass) {
-        Cache cache = CacheProducer.singleton.getCacheManager().getCache(cachedEntityClass.getCanonicalName() + "-CACHE");
+    public static Function<Integer, Object> getEntityFromCacheOrFrom(String cacheName, Function<Integer, Object> nonCachedEntitySource) {
+        Cache cache = CacheProducer.singleton.getCacheManager().getCache(cacheName);
 
-        Object entity = cache.get(id);
-        if (entity == null) {
-            entity = source.get();
-            if (entity != null) {
-                cache.put(id, entity);
+        return new Function<Integer, Object>() {
+            @Override
+            public Object apply(Integer id) {
+                Object entity = cache.get(id);
+                if (entity == null) {
+                    entity = nonCachedEntitySource.apply(id);
+                    if (entity != null) {
+                        cache.put(id, entity);
+                    }
+                }
+                return entity;
             }
-        }
-        return entity;
+        };
     }
+
 }

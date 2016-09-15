@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static com.causy.cache.CacheHandler.getEntityFromCacheOr;
+import static com.causy.cache.CacheHandler.getEntityFromCacheOrFrom;
 
 @Path("team")
 public class TeamResource {
@@ -37,7 +37,7 @@ public class TeamResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTeamById(@PathParam("id") final int id) {
-        Team team = (Team) getEntityFromCacheOr(() -> teamDAO.get(id), id, Team.class);
+        Team team = (Team) getEntityFromCacheOrFrom("TeamCache", teamDAO::get).apply(id);
         return Response.ok(team).build();
     }
 
@@ -58,7 +58,7 @@ public class TeamResource {
     @Path("{id}/member/{employeeId}")
     public Response addMember(@PathParam("id") int id, @PathParam("employeeId") int employeeId) {
         final Team team = teamDAO.get(id);
-        final Employee employee = (Employee) employeeDAO.get(employeeId);
+        final Employee employee = employeeDAO.get(employeeId);
         teamDAO.addMember(team, employee);
         return Response.noContent().build();
     }
