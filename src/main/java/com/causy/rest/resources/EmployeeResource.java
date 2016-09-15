@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static com.causy.cache.CacheHandler.getEntityFromCacheOrFrom;
+import static com.causy.cache.CacheHandler.getEntityFromCache;
 
 @Path("employee")
 public class EmployeeResource {
@@ -32,7 +32,9 @@ public class EmployeeResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeeById(@PathParam("id") final int id) {
-        Employee employee = (Employee) getEntityFromCacheOrFrom("EmployeeCache", employeeDAO::get).apply(id);
+        Employee employee = (Employee) getEntityFromCache("EmployeeCache").orFromSource(employeeDAO::get).usingCacheKey(id);
+
+
         return Response.ok(employee).build();
     }
 
