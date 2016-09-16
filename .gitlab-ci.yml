@@ -5,7 +5,7 @@ build:
   script: "mvn clean package -B -DskipTests -DskipITs -Dfindbugs.skip=true -T1.5C -Dmaven.repo.local=/cache"
 
 
-tests:
+unit-tests:
   stage: test
   script: "mvn test -B -T1.5C -Dfindbugs.skip=true -Dmaven.repo.local=/cache"
 
