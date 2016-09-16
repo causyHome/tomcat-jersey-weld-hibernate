@@ -4,17 +4,14 @@ import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
 
-import java.util.concurrent.TimeUnit;
-
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 public enum CacheSingleton {
     instance;
 
-
     private EmbeddedCacheManager cacheManager;
 
-    public EmbeddedCacheManager getCacheManager() {
+    EmbeddedCacheManager getCacheManager() {
         if (cacheManager == null) {
             cacheManager = initCacheManager();
         }

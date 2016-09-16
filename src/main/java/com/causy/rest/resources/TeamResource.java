@@ -21,7 +21,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 
-
 @Path("team")
 public class TeamResource {
 
@@ -41,8 +40,8 @@ public class TeamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTeamById(@PathParam("id") final int id) {
         Team team = cacheHandler.getEntityFromCache("TeamCache")
-                .orFromSource(teamDAO::get)
-                .usingEntityIdAsCacheKey(id);
+                .orFromSource(() -> teamDAO.get(id))
+                .usingCacheKey(id);
         return Response.ok(team).build();
     }
 

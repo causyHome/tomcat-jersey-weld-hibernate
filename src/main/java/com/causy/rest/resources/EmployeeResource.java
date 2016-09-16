@@ -36,7 +36,7 @@ public class EmployeeResource {
     public Response getEmployeeById(@PathParam("id") final int id) {
         Employee employee = cacheHandler.getEntityFromCache("EmployeeCache")
                 .orFromSource(employeeDAO::get)
-                .usingEntityIdAsCacheKey(id);
+                .usingCacheKeyAsSourceParameter(id);
 
 
         return Response.ok(employee).build();
