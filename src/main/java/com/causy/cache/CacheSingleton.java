@@ -13,15 +13,11 @@ public enum CacheSingleton {
 
     EmbeddedCacheManager getCacheManager() {
         if (cacheManager == null) {
-            cacheManager = initCacheManager();
+            ConfigurationBuilder config = new ConfigurationBuilder();
+            config.expiration().lifespan(30, MINUTES);
+            cacheManager = new DefaultCacheManager(config.build());
         }
         return cacheManager;
-    }
-
-    private EmbeddedCacheManager initCacheManager() {
-        ConfigurationBuilder config = new ConfigurationBuilder();
-        config.expiration().lifespan(30, MINUTES);
-        return new DefaultCacheManager(config.build());
     }
 
     public void destroy() {
