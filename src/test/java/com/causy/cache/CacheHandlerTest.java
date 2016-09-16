@@ -35,12 +35,12 @@ public class CacheHandlerTest {
 
         // when
         final String actual = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
-        assertThat(actual).isEqualTo(ENTITY);
+        // when fetching a second time
+        final String actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
 
-
-        // when fetching a second
-        cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
         //then
+        assertThat(actual).isEqualTo(ENTITY);
+        assertThat(actual2).isEqualTo(ENTITY);
         verify(cacheSpy, times(1)).put(ENTITY_ID_AND_CACHE_KEY, ENTITY);
         verify(sourceFunctionMock, times(1)).apply(ENTITY_ID_AND_CACHE_KEY);
     }
@@ -58,14 +58,13 @@ public class CacheHandlerTest {
         when(sourceMock.get()).thenReturn(ENTITY);
 
         // when
-        final String actual = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
-        assertThat(actual).isEqualTo(ENTITY);
-
-
+        final String actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
         // when fetching a second time
-        cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
+        final String actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
 
         //then
+        assertThat(actual1).isEqualTo(ENTITY);
+        assertThat(actual2).isEqualTo(ENTITY);
         verify(cacheSpy, times(1)).put(ENTITY_ID_AND_CACHE_KEY, ENTITY);
         verify(sourceMock, times(1)).get();
     }
