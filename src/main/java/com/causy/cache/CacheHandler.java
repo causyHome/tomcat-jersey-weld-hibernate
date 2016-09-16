@@ -17,7 +17,7 @@ public class CacheHandler<K, E> {
     }
 
     public CacheFunction1<K, E> getEntityFromCache(String cacheName) {
-        Cache<K, E> cache = CacheProducer.singleton.getCacheManager().getCache(cacheName);
+        Cache<K, E> cache = CacheSingleton.instance.getCacheManager().getCache(cacheName);
         return new CacheFunction1<K, E>() {
             @Override
             public CacheFunction2<K, E> orFromSource(Function<K, E> source) {

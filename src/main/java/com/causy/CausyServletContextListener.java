@@ -1,7 +1,7 @@
 package com.causy;
 
 
-import com.causy.cache.CacheProducer;
+import com.causy.cache.CacheSingleton;
 import com.causy.persistence.PersistenceSingleton;
 
 import javax.servlet.ServletContextEvent;
@@ -12,7 +12,7 @@ public class CausyServletContextListener implements javax.servlet.ServletContext
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        CacheProducer.singleton.destroyCacheManager();
+        CacheSingleton.instance.destroy();
         PersistenceSingleton.instance.destroy();
     }
 

@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 
-public enum CacheProducer {
-    singleton;
+public enum CacheSingleton {
+    instance;
 
 
     private EmbeddedCacheManager cacheManager;
@@ -27,7 +27,7 @@ public enum CacheProducer {
         return new DefaultCacheManager(config.build());
     }
 
-    public void destroyCacheManager() {
+    public void destroy() {
         cacheManager.stop();
     }
 
