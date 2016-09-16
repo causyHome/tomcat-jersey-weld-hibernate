@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "Team",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"ID"})})
-public class Team {
+public class Team implements CausyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

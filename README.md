@@ -11,5 +11,5 @@ The features we want to implement here are:
   - Dependency injection: [CDI](http://docs.oracle.com/javaee/6/tutorial/doc/giwhl.html), using [Weld](http://weld.cdi-spec.org/) implementation
   - Object-Relational Mapping: [JPA](http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html), using [Hibernate](http://hibernate.org/) implementation
   - In-container testing, using [arquillian](arquillian.org)
-  - Server-side using [infinispan](infinispan.org/)
+  - Server-side cache using [infinispan](infinispan.org/)
 

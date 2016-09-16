@@ -1,5 +1,6 @@
 package com.causy.cache;
 
+import com.causy.model.Employee;
 import org.infinispan.Cache;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +14,13 @@ public class CacheHandlerTest {
 
     private static final int ENTITY_ID_AND_CACHE_KEY = 1;
     private static final String CACHE_NAME = "test";
-    private static final String ENTITY = "result";
+    private static final Employee ENTITY = new Employee("test", "test");
 
-    private final CacheFetcher<Integer, String> cacheFetcherMock = mock(CacheFetcher.class);
-    private final CacheHandler<Integer, String> cacheHandler = new CacheHandler<>(cacheFetcherMock);
+    private final CacheFetcher<Integer, Employee> cacheFetcherMock = mock(CacheFetcher.class);
+    private final CacheHandler<Integer, Employee> cacheHandler = new CacheHandler<>(cacheFetcherMock);
 
-    private final Cache<Integer, String> testCache = CacheSingleton.instance.getCacheManager().getCache(CACHE_NAME);
-    private final Cache<Integer, String> cacheSpy = spy(testCache);
+    private final Cache<Integer, Employee> testCache = CacheSingleton.instance.getCacheManager().getCache(CACHE_NAME);
+    private final Cache<Integer, Employee> cacheSpy = spy(testCache);
 
     @Before
     public void beforeEach(){
@@ -29,15 +30,15 @@ public class CacheHandlerTest {
     @Test
     public void should_get_entity_from_source_and_store_it_using_cacheKey_as_sourceParameter() {
         // given
-        Function<Integer, String> sourceFunctionMock = mock(Function.class);
+        Function<Integer, Employee> sourceFunctionMock = mock(Function.class);
 
         when(cacheFetcherMock.fetchCache(CACHE_NAME)).thenReturn(cacheSpy);
         when(sourceFunctionMock.apply(any())).thenReturn(ENTITY);
 
         // when fetching a first time
-        final String actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
+        final Employee actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
         // when fetching a second time
-        final String actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
+        final Employee actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
 
         //then
         assertThat(actual1).isEqualTo(ENTITY);
@@ -52,15 +53,15 @@ public class CacheHandlerTest {
     @Test
     public void should_get_entity_from_source_and_not_store_it_if_actual_retrieval_returned_nothing_using_cacheKey_as_sourceParameter() {
         // given
-        Function<Integer, String> sourceFunctionMock = mock(Function.class);
+        Function<Integer, Employee> sourceFunctionMock = mock(Function.class);
 
         when(cacheFetcherMock.fetchCache(CACHE_NAME)).thenReturn(cacheSpy);
         when(sourceFunctionMock.apply(ENTITY_ID_AND_CACHE_KEY)).thenReturn(null);
 
         // when fetching a first time
-        final String actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
+        final Employee actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
         // when fetching a second time
-        final String actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
+        final Employee actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceFunctionMock).usingCacheKeyAsSourceParameter(ENTITY_ID_AND_CACHE_KEY);
 
         //then
         assertThat(actual1).isEqualTo(null);
@@ -75,15 +76,15 @@ public class CacheHandlerTest {
     @Test
     public void should_get_entity_from_source_and_store_it_using_cacheKey() {
         // given
-        CacheHandler.Source<String> sourceMock = mock(CacheHandler.Source.class);
+        CacheHandler.Source<Employee> sourceMock = mock(CacheHandler.Source.class);
 
         when(cacheFetcherMock.fetchCache(CACHE_NAME)).thenReturn(cacheSpy);
         when(sourceMock.get()).thenReturn(ENTITY);
 
         // when fetching a first time
-        final String actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
+        final Employee actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
         // when fetching a second time
-        final String actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
+        final Employee actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
 
         //then
         assertThat(actual1).isEqualTo(ENTITY);
@@ -99,15 +100,15 @@ public class CacheHandlerTest {
     @Test
     public void should_get_entity_from_source_and_not_store_it_if_actual_retrieval_returned_nothing_using_cacheKey() {
         // given
-        CacheHandler.Source<String> sourceMock = mock(CacheHandler.Source.class);
+        CacheHandler.Source<Employee> sourceMock = mock(CacheHandler.Source.class);
 
         when(cacheFetcherMock.fetchCache(CACHE_NAME)).thenReturn(cacheSpy);
         when(sourceMock.get()).thenReturn(null);
 
         // when fetching a first time
-        final String actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
+        final Employee actual1 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
         // when fetching a second time
-        final String actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
+        final Employee actual2 = cacheHandler.getEntityFromCache(CACHE_NAME).orFromSource(sourceMock).usingCacheKey(ENTITY_ID_AND_CACHE_KEY);
 
         //then
         assertThat(actual1).isEqualTo(null);

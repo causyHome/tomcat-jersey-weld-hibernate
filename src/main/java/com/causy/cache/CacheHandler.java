@@ -1,11 +1,12 @@
 package com.causy.cache;
 
+import com.causy.model.CausyEntity;
 import org.infinispan.Cache;
 
 import javax.inject.Inject;
 import java.util.function.Function;
 
-public class CacheHandler<K, E> {
+public class CacheHandler<K, E extends CausyEntity> {
 
     private final CacheFetcher<K, E> cacheFetcher;
 

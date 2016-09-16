@@ -15,7 +15,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "Employee",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"ID"})})
-public class Employee {
+public class Employee implements CausyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
