@@ -22,10 +22,10 @@ import java.net.URISyntaxException;
 public class EmployeeResource {
 
     private final EmployeeDAO employeeDAO;
-    private final CacheHandler<Employee> cacheHandler;
+    private final CacheHandler<Integer, Employee> cacheHandler;
 
     @Inject
-    public EmployeeResource(EmployeeDAO employeeDAO, CacheHandler<Employee> cacheHandler) {
+    public EmployeeResource(EmployeeDAO employeeDAO, CacheHandler<Integer, Employee> cacheHandler) {
         this.employeeDAO = employeeDAO;
         this.cacheHandler = cacheHandler;
     }

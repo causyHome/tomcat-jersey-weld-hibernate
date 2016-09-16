@@ -27,10 +27,10 @@ public class TeamResource {
 
     private final TeamDAO teamDAO;
     private final EmployeeDAO employeeDAO;
-    private final CacheHandler<Team> cacheHandler;
+    private final CacheHandler<Integer, Team> cacheHandler;
 
     @Inject
-    public TeamResource(TeamDAO teamDAO, EmployeeDAO employeeDAO, CacheHandler<Team> cacheHandler) {
+    public TeamResource(TeamDAO teamDAO, EmployeeDAO employeeDAO, CacheHandler<Integer, Team> cacheHandler) {
         this.teamDAO = teamDAO;
         this.employeeDAO = employeeDAO;
         this.cacheHandler = cacheHandler;
