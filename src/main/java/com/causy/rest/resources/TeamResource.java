@@ -40,7 +40,9 @@ public class TeamResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTeamById(@PathParam("id") final int id) {
-        Team team = cacheHandler.getEntityFromCache("TeamCache").orFromSource(teamDAO::get).usingCacheKey(id);
+        Team team = cacheHandler.getEntityFromCache("TeamCache")
+                .orFromSource(teamDAO::get)
+                .usingEntityIdAsCacheKey(id);
         return Response.ok(team).build();
     }
 

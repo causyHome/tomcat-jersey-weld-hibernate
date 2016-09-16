@@ -13,7 +13,7 @@ public class CacheHandler<K, E> {
 
     @FunctionalInterface
     public interface CacheFunction2<K, E> {
-        E usingCacheKey(K cacheKey);
+        E usingEntityIdAsCacheKey(K cacheKey);
     }
 
     public CacheFunction1<K, E> getEntityFromCache(String cacheName) {
@@ -23,7 +23,7 @@ public class CacheHandler<K, E> {
             public CacheFunction2<K, E> orFromSource(Function<K, E> source) {
                 return new CacheFunction2<K, E>() {
                     @Override
-                    public E usingCacheKey(K entityId) {
+                    public E usingEntityIdAsCacheKey(K entityId) {
                         E entity = cache.get(entityId);
                         if (entity == null) {
                             entity = source.apply(entityId);

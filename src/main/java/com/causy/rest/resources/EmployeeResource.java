@@ -34,7 +34,9 @@ public class EmployeeResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeeById(@PathParam("id") final int id) {
-        Employee employee = cacheHandler.getEntityFromCache("EmployeeCache").orFromSource(employeeDAO::get).usingCacheKey(id);
+        Employee employee = cacheHandler.getEntityFromCache("EmployeeCache")
+                .orFromSource(employeeDAO::get)
+                .usingEntityIdAsCacheKey(id);
 
 
         return Response.ok(employee).build();
